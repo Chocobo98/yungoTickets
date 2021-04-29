@@ -1,15 +1,17 @@
-<div id="graficaTickets" style="flex: auto; width: 40%; align-self: center;
-margin-top: 25px;">
-</div>
-<div class="self-center p-3">
-  <!--Boton para mostrar los registros de los meses en el año actual-->
-  <button id="btnMensual" class="text-green-500 bg-transparent border border-solid border-green-500 hover:bg-green-500 hover:text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-  Mensual
-  </button>
-  <!--Boton para mostrar registro de la semana (Desde el dia actual de la maquina)-->
-  <button id="btnSemanal" class="text-red-500 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-  Semanal
-  </button>
+<div class="container h-auto w-auto inline-flex box-border ">
+  <div id="graficaTickets" class="flex-grow-0 w-2/5 self-auto mt-6 ml-5 pb-8">
+  </div>
+  <div class="flex flex-col flex-grow-0 space-y-5 mt-9 p-5">
+    <!--Boton para mostrar los registros de los meses en el año actual-->
+    <button id="btnMensual" class="text-green-500 bg-transparent border border-solid border-green-500 hover:bg-green-500 hover:text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+    Mensual
+    </button>
+    <!--Boton para mostrar registro de la semana (Desde el dia actual de la maquina)-->
+    <button id="btnSemanal" class="text-red-500 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+    Semanal
+    </button>
+  </div>
+  @include('tablas.tablasNumerosTickets',['ticketMensual'=>$ticketMensual,'ticketGeneral'=>$ticketGeneral])
 </div>
 
 <!-- Charting library -->
@@ -44,8 +46,6 @@ margin-top: 25px;">
       });
     });
     
-    
-
     //console.log(registros);
 
 </script>

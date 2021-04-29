@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Carbon;
 use App\Models\Clientes;
+use App\Models\Comentarios;
+
+use Illuminate\Support\Facades\DB;
 
 class ticketsController extends Controller
 {
@@ -99,8 +102,9 @@ class ticketsController extends Controller
      */
     public function show($id)
     {
-        $data = Ticket::infoTicket($id);   
-        return view('tickets.show')->with('data',$data);
+        $data = Ticket::infoTicket($id);  
+        //$comments = Ticket::comentariosTickets($id);
+        return view('tickets.show')->with('data',$data/*'comments'=>$comments]*/);
     }
 
     /**
@@ -136,4 +140,26 @@ class ticketsController extends Controller
     {
         //
     }
+
+    /*
+    public function estadoMensual()
+    {
+        $mes= Carbon::now()->month;
+
+        $data = Ticket::select(DB::raw('estado as Estado,count(*) as Registros'))
+        ->where(DB::raw('Month(Fecha)'),'=',$mes)
+        ->groupby(DB::raw('1'))
+        ->pluck('Registros','Estado')
+        ->all();
+
+        //dd($data);
+
+        return view('tablas.tablasNumerosTickets')->with('data',$data);
+    }
+
+    public function estadoGeneral()
+    {
+
+    }
+    */
 }

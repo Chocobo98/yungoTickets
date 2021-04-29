@@ -9,13 +9,21 @@ class Comentarios extends Model
 {
     use HasFactory;
 
+    public $table = 'comentarios';
     protected $primaryKey = 'idComentario';
     protected $fillable = ['comentario'];
     public $foreignKey = 'fk_ticket';
+    public $timestamps = true;
 
-    public static function obtenerCommentarios($id)
-    {
-        
-    }
     
+    public function tickets()
+    {
+        return $this->belongsTo(Tickets::class);
+    }
+
+    public static function comentariosTickets($id)
+    {
+        $query = Comentarios::where("fk_ticket","=",$id)->get();
+        return $query;
+    }
 }

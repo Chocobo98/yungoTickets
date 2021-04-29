@@ -24,7 +24,7 @@ class GraficaIndex extends BaseChart
         
         //Consulta para contabilizar todos los tickets registrados en la BD
         $consulta = DB::table('ticket')
-        ->select(DB::raw('count(1) as Cantidad,date(Fecha) as Fecha'))
+        ->select(DB::raw("count(1) as Cantidad,date(Fecha) as Fecha"))
         //->where('Fecha',[Ticket::now()->startOfWeek, Ticket::now()->endOfWeek()]
         ->groupBy(DB::raw('2'))
         ->pluck('Cantidad','Fecha')->all();
@@ -32,13 +32,14 @@ class GraficaIndex extends BaseChart
 
         $date = Carbon::now()->subWeek();
         $data = collect(range(0,7))->map(function($days) use ($date,$consulta){
-            $daysWeek = $date->clone()->addDays($days)->toDateString();
+            $daysWeek = $date->clone()->addDays($days)->toDateString(); //Variable que coincide con las fechas [Fecha completa d-m-y]
             $tickets=0;
+            $dias = $date->clone()->addDays($days)->format('d/m'); //Variable que nomas funciona como texto para mostrarlo en la grafica [Fecha corta d-m]
             if(array_key_exists($daysWeek,$consulta)){
                 $tickets=$consulta[$daysWeek];
             }
             return [
-                'Semana' => $daysWeek,
+                'Semana' => $dias,
                 'tickets' => $tickets
             ];
         });

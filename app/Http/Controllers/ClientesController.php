@@ -164,9 +164,18 @@ class ClientesController extends Controller
 
     public function asignar($id,$mac)
     {
+        //Consulta para buscar si existe alguien con esa mac
+        $query = Clientes::select('*')->where('fk_mac','=',$mac)->get();
+
+        //Si existe, se realiza limpiado de MAC; Si no, se asigna directamente
+        if($query!=null)
+        {
+            $cambio = Clientes::where('fk_mac','=',$mac)->update(['fk_mac'=>null]);
+        }
         $data = Clientes::find($id);
         $data->fk_mac=$mac;
         $data->save();
+        
 
         //dd($data);
 

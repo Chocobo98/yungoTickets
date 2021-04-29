@@ -24,7 +24,19 @@
                                 <td class="border-grey-light border hover:bg-gray-100 p-2 truncate text-sm">{{ $tick->idTicket }}</td>
                                 <td class="border-grey-light border hover:bg-gray-100 p-2 truncate text-sm">{{ $tick->Fecha }}</td>
                                 <td class="border-grey-light border hover:bg-gray-100 p-2  text-sm">{{ $tick->descripcion}}</td>
-                                <td class="border-grey-light border hover:bg-gray-100 p-2 truncate text-sm">{{ $tick->estado }}</td>
+                                @switch($tick->estado)
+                                    @case('Nuevo')
+                                        <td class="border-grey-light border hover:bg-gray-100 p-2 truncate text-sm"><span class='text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-green-600 bg-green-200 last:mr-0 mr-1'>Nuevo</span></td>
+                                        @break
+                                    @case('Abierto')
+                                        <td class="border-grey-light border hover:bg-gray-100 p-2 truncate text-sm"><span class='text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-yellow-600 bg-yellow-200 last:mr-0 mr-1'>Abierto</span></td>
+                                        @break
+                                    @case('Solucionado')
+                                        <td class="border-grey-light border hover:bg-gray-100 p-2 truncate text-sm"><span class='text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-gray-600 bg-gray-200 last:mr-0 mr-1'>Resuelto</span></td>
+                                        @break
+                                    @default     
+                                @endswitch
+                                {{--<td class="border-grey-light border hover:bg-gray-100 p-2 truncate text-sm">{{ $tick->estado }}</td>--}}
                                 <td class="border-grey-light border hover:bg-gray-100 p-2 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer text-sm"><a href="/tickets/{{ $tick->idTicket }}">{{ $tick->tipoProblema }}</a></td>
                             </tr>
                         @endforeach   
