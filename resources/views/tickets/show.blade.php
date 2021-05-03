@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div id="app" class="sm:mt-0 px-6">
-    <div class="md:grid md:grid-cols-5 md:gap-6 md:mt-5">
+    <div class="md:grid md:grid-cols-6 md:gap-6 md:grid-rows-2 md:mt-5">
     @foreach ($data as $dato)
         @include('tablas.ticketInfo',['dato'=>$dato])
     @endforeach
