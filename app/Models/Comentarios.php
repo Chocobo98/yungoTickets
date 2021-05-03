@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Comentarios extends Model
 {
@@ -23,7 +24,9 @@ class Comentarios extends Model
 
     public static function comentariosTickets($id)
     {
-        $query = Comentarios::where("fk_ticket","=",$id)->get();
+        $query = Comentarios::select(DB::raw("idComentario, comentario, fk_ticket as Ticket, date_format(created_at,'%d/%M/%Y %H:%i %p') as Fecha"))
+        ->where('fk_ticket','=',$id)
+        ->get();
         return $query;
     }
 }
