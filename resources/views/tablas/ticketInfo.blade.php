@@ -37,56 +37,64 @@
     </div>
 </div>
 
-<div class="prueba">
-    <button id="test">Prueba</button>
-    <div id ="comentarios"></div>
+{{-- Caja de comentarios registrados --}}
+<div class="md:col-start-4 md:col-end-7">
+    <p class="text-center mt-1 font-mono text-xl font-bold relative">Comentarios</p>
+    <div class="grid gap-6 mb-8">
+        <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 md:overflow-y-auto md:h-72" id="comentarios">    
+        </div>
+    {{-- <buttonid="test">Prueba</button> --}}
+    </div>
 </div>
 
-
+{{-- Caja para poner comentarios --}}
+<div class="md:col-start-4 md:col-end-7 md:row-start-2">
+    <form name="registrar" id="registrar" class="registrar">
+        <textarea class="min-w-full resize-none p-4 rounded-lg" placeholder="Agregar comentario..."></textarea>
+        <button id="comentar" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Comentar
+        </button>
+    </form>
+</div>
 
 <script>
     $(document).ready(function(){
-        $('#test').on('click',function(){
+        //$(docuemnt).on('load',function(){
             var id = "{{ $dato->idTicket }}";
             $.ajax({
                 url:`/tickets/${id}/comments`,
                 type:"GET",
-                dataType:"json",
-                success:function(data)
+                dataType:"json"}).
+                done(function(data)
                 {
                     for(var i=0; i<data.length;i++)
                     {
                         var temp = data[i];
                         console.log('Dentro del arreglo antes del JSON', temp);
-                        
-                        console.log(temp['comentario']);
-                        console.log(temp['created_at']);
-                        //FALTA ARREGLAR ESTA PARTE Y METERLE MAS DESMADRE
+                        var msg = `<h4 class="mb-1 font-semibold text-gray-600 dark:text-gray-300">${temp['Fecha']}</h4>\n<p class="mb-4 text-gray-600 dark:text-gray-400">${temp['comentario']}</p>`;
+                        $('#comentarios').append(msg);
                         /*
+                        console.log(temp['comentario']);
+                        console.log(temp['Fecha']);
+                        FALTA ARREGLAR ESTA PARTE Y METERLE MAS DESMADRE
+                        CAMBIA ESTA MADRE; NO OCUPAS CICLOS (CREO...)
                         for( const[k,v] of Object.entries(temp))
                         {
                             var msg = `<p>${v}</p>`;
                             $('#comentarios').append(msg);
-                            console.log(`Entro ${k}: ${v}`);
-                        }
+                            //console.log(`Entro ${k}: ${v}`);
+                        }   
                         */
-                        
-                        //console.log('Entro',Object.values(temp));
-                        
                     }
-                    /*
-                    var msg = `<p>${data}</p>`;
-                    $('#comentarios').append(msg);
-                    console.log(data);
-                    */
-                    
-                },
+                });
+                /*
                 error:function(data)
                 {
                     console.log('Error',data);
                 }
-            })
-        });
+                */
+            //})
+        //});
     });
 
 </script>
