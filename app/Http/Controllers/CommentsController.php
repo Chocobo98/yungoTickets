@@ -14,15 +14,17 @@ class CommentsController extends Controller
         return $data;
     }
 
-   public function store(Request $request, Ticket $ticket)
-   {
-        $comment = $ticket->comentarios()->create([
-            'comentario' => $request->comentario,
-            'fk_ticket' => $request->fk_ticket
+    public function agregar(Request $request,$id)
+    {
+        $data = Comentarios::create([
+            'comentario' => $request->input('comentario'),
+            'fk_ticket' => $id
         ]);
 
-        $comment = Comentarios::where('idComentario',$comment->idComentario)->with('idTicket')->first();
+        $getData = Comentarios::comentariosTickets($id);
 
-        return $comment->toJson();
-   }
+        //Se obtiene el primero, debido a la forma que esta ordenada en el modelo
+        return $getData->first(); 
+        
+    }
 }
