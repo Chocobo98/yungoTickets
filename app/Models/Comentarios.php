@@ -12,9 +12,9 @@ class Comentarios extends Model
 
     public $table = 'comentarios';
     protected $primaryKey = 'idComentario';
-    protected $fillable = ['comentario'];
+    protected $fillable = ['comentario','fk_ticket'];
     public $foreignKey = 'fk_ticket';
-    public $timestamps = true;
+    public $timestamps = false;
 
     
     public function tickets()
@@ -26,6 +26,7 @@ class Comentarios extends Model
     {
         $query = Comentarios::select(DB::raw("idComentario, comentario, fk_ticket as Ticket, date_format(created_at,'%d/%M/%Y %H:%i %p') as Fecha"))
         ->where('fk_ticket','=',$id)
+        ->orderBy('created_at','desc')
         ->get();
         return $query;
     }
