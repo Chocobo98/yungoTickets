@@ -50,8 +50,9 @@
 {{-- Caja para poner comentarios --}}
 <div class="md:col-start-4 md:col-end-7 md:row-start-2">
     <form name="registrar" id="registrar" class="registrar">
-        <textarea class="min-w-full resize-none p-4 rounded-lg" placeholder="Agregar comentario..."></textarea>
-        <button id="comentar" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        @csrf
+        <textarea type="text" id="comentario" name="comentario" class="min-w-full resize-none p-4 rounded-lg" placeholder="Agregar comentario..."></textarea>
+        <button id="comentar" type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Comentar
         </button>
     </form>
@@ -59,42 +60,72 @@
 
 <script>
     $(document).ready(function(){
-        //$(docuemnt).on('load',function(){
-            var id = "{{ $dato->idTicket }}";
-            $.ajax({
-                url:`/tickets/${id}/comments`,
-                type:"GET",
-                dataType:"json"}).
-                done(function(data)
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        
+        var id = "{{ $dato->idTicket }}";
+        $.ajax({
+            url:`/tickets/${id}/comments`,
+            type:"GET",
+            dataType:"json"}). //Fin de Ajax
+            done(function(data)
+            {
+                for(var i=0; i<data.length;i++)
                 {
-                    for(var i=0; i<data.length;i++)
-                    {
-                        var temp = data[i];
-                        console.log('Dentro del arreglo antes del JSON', temp);
-                        var msg = `<h4 class="mb-1 font-semibold text-gray-600 dark:text-gray-300">${temp['Fecha']}</h4>\n<p class="mb-4 text-gray-600 dark:text-gray-400">${temp['comentario']}</p>`;
-                        $('#comentarios').append(msg);
-                        /*
-                        console.log(temp['comentario']);
-                        console.log(temp['Fecha']);
-                        FALTA ARREGLAR ESTA PARTE Y METERLE MAS DESMADRE
-                        CAMBIA ESTA MADRE; NO OCUPAS CICLOS (CREO...)
-                        for( const[k,v] of Object.entries(temp))
-                        {
-                            var msg = `<p>${v}</p>`;
-                            $('#comentarios').append(msg);
-                            //console.log(`Entro ${k}: ${v}`);
-                        }   
-                        */
-                    }
-                });
-                /*
-                error:function(data)
-                {
-                    console.log('Error',data);
+                    var temp = data[i];
+                    //console.log('Dentro del arreglo antes del JSON', temp);
+                    var msg = `<h4 class="mb-1 font-semibold text-gray-600 dark:text-gray-300">${temp['Fecha']}</h4>\n<p class="mb-4 text-gray-600 dark:text-gray-400">${temp['comentario']}</p>`;
+                    $('#comentarios').append(msg);
                 }
-                */
-            //})
-        //});
+            });//Fin de cargar la pagina
+               
+        
+        $('#registrar').submit(function(event){
+            var comentario = $('#comentario').val();
+            $.ajax({
+            url:`/tickets/${id}/comments`,
+            type:'POST',
+            data:{
+                comentario:comentario,
+                fk_ticket: id,
+            },
+            success:function(data){
+                //Se agrega el comentario a la caja sin cargar la pagina
+                var msg = `<h4 class="mb-1 font-semibold text-gray-600 dark:text-gray-300">${data['Fecha']}</h4>\n<p class="mb-4 text-gray-600 dark:text-gray-400">${data['comentario']}</p>`;
+                $('#comentarios').prepend(msg);
+
+                //Notificacion de comentario agregado
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Comentario agregado'
+                })
+            },
+            error:function(data){
+                //Notificacion de error en el comentario
+                Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ocurrio un error al intentar comentar'
+                })
+            }
+            });
+            event.preventDefault();
+        });
     });
 
 </script>
