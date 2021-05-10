@@ -49,4 +49,5 @@ Route::post('/tickets/makeComment','App\Http\Controllers\CommentsController@make
 
 //API para los comentarios
 Route::get('/tickets/{id}/comments','App\Http\Controllers\CommentsController@obtener')->name('comments.obtener');
+Route::post('/tickets/{id}/comments','App\Http\Controllers\CommentsController@agregar')->name('comments.agregar');
 
