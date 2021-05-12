@@ -51,3 +51,6 @@ Route::post('/tickets/makeComment','App\Http\Controllers\CommentsController@make
 Route::get('/tickets/{id}/comments','App\Http\Controllers\CommentsController@obtener')->name('comments.obtener');
 Route::post('/tickets/{id}/comments','App\Http\Controllers\CommentsController@agregar')->name('comments.agregar');
 
+//API para el historial del ticket con el tipo de problema
+Route::get('/tickets/{id}/{tipoProblema}','App\Http\Controllers\ticketsController@historialTickets')->name('tickets.historial');
+
