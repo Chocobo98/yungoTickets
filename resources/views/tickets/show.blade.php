@@ -7,26 +7,7 @@
     @endforeach
     </div>
 </div>
-{{--
-<h3>Comentarios:<h3>
-<div class="mb-13">
-    <textarea class="form-control" rows="3" name="body" placeholder="Leave a comment" v-model="comentariosBox"></textarea>
-    <button class="btn btn-success" class="mt-3" @click.prevent="postComment">Subir comentario</button>
-</div>
 
-<div class="media mt-5" v-for="comment in comentarios">
-    <div class="media-left">
-        <a href="#"></a>
-    </div>
-   <div class="media-body">
-        <h4 class="media-heading"></h4>
-        <p>
-            @{{comment.comentario}}
-        </p>
-        <span class="text-gray-400">@{{comment.created_at}}</span>
-   </div>
-</div>
---}}
 @endsection
 @section('scripts')
     <script>
