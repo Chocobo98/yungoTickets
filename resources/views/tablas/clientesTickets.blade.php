@@ -1,7 +1,7 @@
 <p class="text-center mt-1 font-mono text-xl font-bold relative grid col-start-2 col-end-4 row-start-1 left-15">Tickets Registrados</p>
 <div class= "md:mt-0 md:col-start-1 col-end-6" style="background: #edf2f7;">
     
-    <div class="shadow overflow-hidden sm:rounded-md">
+    <div class="shadow overflow-y-auto sm:rounded-m">
         <div class="inset-x-0 bottom-0">
             @if(count($ticket)>=1)
                 <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
@@ -12,11 +12,9 @@
                                 <th class="p-2 text-center">Fecha</th>
                                 <th class="p-2 text-center">Descripcion</th>
                                 <th class="p-2 text-center">Estado</th>
-
                                 <th class="p-2 text-left" width="110px" >Problematica</th>
                             </tr>
                         @endforeach
-                    
                     </thead>
                     <tbody class="flex-1 sm:flex-none">
                         @foreach ($ticket as $tick)
@@ -31,7 +29,7 @@
                                     @case('Abierto')
                                         <td class="border-grey-light border hover:bg-gray-100 p-2 truncate text-sm"><span class='text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-yellow-600 bg-yellow-200 last:mr-0 mr-1'>Abierto</span></td>
                                         @break
-                                    @case('Solucionado')
+                                    @case('Resuelto')
                                         <td class="border-grey-light border hover:bg-gray-100 p-2 truncate text-sm"><span class='text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-gray-600 bg-gray-200 last:mr-0 mr-1'>Resuelto</span></td>
                                         @break
                                     @default     
