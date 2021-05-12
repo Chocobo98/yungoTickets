@@ -102,7 +102,7 @@ class ticketsController extends Controller
      */
     public function show($id)
     {
-        $data = Ticket::infoTicket($id);  
+        $data = Ticket::infoTicket($id);
         //$comments = Ticket::comentariosTickets($id);
         return view('tickets.show')->with('data',$data/*'comments'=>$comments]*/);
     }
@@ -127,7 +127,11 @@ class ticketsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $estadoTicket = Ticket::where('idTicket',$id)->update([
+            'estado' => $request->input('estado')
+        ]);
+
+        return true;
     }
 
     /**
@@ -141,25 +145,10 @@ class ticketsController extends Controller
         //
     }
 
-    /*
-    public function estadoMensual()
+    public function historialTickets($id,$tipoProblema)
     {
-        $mes= Carbon::now()->month;
+        $historial = Ticket::historialTickets($id,$tipoProblema);
 
-        $data = Ticket::select(DB::raw('estado as Estado,count(*) as Registros'))
-        ->where(DB::raw('Month(Fecha)'),'=',$mes)
-        ->groupby(DB::raw('1'))
-        ->pluck('Registros','Estado')
-        ->all();
-
-        //dd($data);
-
-        return view('tablas.tablasNumerosTickets')->with('data',$data);
+        return $historial->toJson();
     }
-
-    public function estadoGeneral()
-    {
-
-    }
-    */
 }
