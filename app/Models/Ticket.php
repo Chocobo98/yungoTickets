@@ -94,4 +94,15 @@ class Ticket extends Model
         }
         return $estados;
     }
+
+    public static function historialTickets($id,$tipoProblema)
+    {
+        $query = Ticket::select('idTicket', 'Fecha', 'estado')
+        ->where([
+            ['fk_cliente','=',$id],
+            ['tipoProblema','=',$tipoProblema]])
+        ->get();
+
+        return $query;
+    }
 }
