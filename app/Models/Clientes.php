@@ -58,6 +58,7 @@ class Clientes extends Model
         ->join('sitios','fk_sitios','=','idSitios')
         ->join('ticket','idCliente','=','fk_cliente')
         ->distinct('idCliente')
+        ->where('ticket.estado','<>','Resuelto')
         ->orderBy('Fecha','desc')
         ->limit(5)
         ->get();
