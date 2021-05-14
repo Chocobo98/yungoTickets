@@ -54,3 +54,7 @@ Route::post('/tickets/{id}/comments','App\Http\Controllers\CommentsController@ag
 //API para el historial del ticket con el tipo de problema
 Route::get('/tickets/{id}/{tipoProblema}','App\Http\Controllers\ticketsController@historialTickets')->name('tickets.historial');
 
+//API para la interaccion de los archivos
+Route::get('/upload-file/{id}', 'App\Http\Controllers\FileUpload@getFile')->name('file.get');
+Route::post('/upload-file/{id}','App\Http\Controllers\FileUpload@fileUpload')->name('file.upload');
+
