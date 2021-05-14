@@ -66,6 +66,26 @@
             Comentar
         </button>
     </form>
+    {{-- Apartado para subir archivos  --}}
+    <form action="/upload-file/{{ $dato->idTicket }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @if(count($errors)>0)
+            <div>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>        
+            </div>
+        @endif
+        <div class="custom-file">
+            <input type="file" name="file" class="custom-file-input" id="chooseFile">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+            Upload Filess
+        </button>
+    </form>
 </div>
 
 {{-- Tabla de los tickets registrados con el tipo de problema --}}
@@ -120,52 +140,24 @@
             done(function(data){
                 console.log(data); // [{…}, {…}, {…}]
 
-                //var table = $('#historial');
-                /*
-                var tblHeader = $('#cabeza');
-                var cabecera = data[0];
-                console.log('Datos de la primera columna',cabecera); //{idTicket: 24, Fecha: "2021-05-11 11:46:30", estado: "Nuevo"}
-                
-                console.log(tblHeader);
-                for(var h in cabecera)
-                {
-                    //console.log(cabecera);
-                    //console.log('Datos por casilla antes de imprimir en cabecera',h);
-                    $(tblHeader).append(`<th class='p-3 text-left'>${h}</th>`);
-                    console.log(tblHeader);
-                }
-                
-                //tblHeader+="</tr></thead>";
-                //console.log(tblHeader);
-
-                $(tblHeader).appendTo(table);
-                */
-
                 var cuerpo = $('#cuerpo');
                
                 for(var i=0; i<data.length; i++)
                 {
                     var temp= data[i];
-                    //console.log(temp);
+                    var tblRow = "<tr class='flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0'>"; 
 
-                    var tblRow = "<tr class='flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0'>";
-                        //console.log(tblRow);
-
-                    $.each(temp, function(index,value){
-                        //console.log('Dentro del segundo for con each ajax',index,":",value);
+                    $.each(temp, function(index,value)
+                    {
                         if(index=='idTicket')
                         {
                             tblRow+=`<td class='border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 truncate'><a href='/tickets/${value}'>${value}</a></td>`;
                             return;
                         }
-                        tblRow += `<td class='border-grey-light border hover:bg-gray-100 p-3 truncate'>${value}</td>`;
-                        //console.log(tblRow);
+                        tblRow += `<td class='border-grey-light border hover:bg-gray-100 p-3 truncate'>${value}</td>`;   
                     });
                     tblRow+="</tr>";
-                    console.log(tblRow);
-
-                   $(cuerpo).append(tblRow);
-
+                    $(cuerpo).append(tblRow);
                 }
                 
             });
@@ -214,7 +206,6 @@
                 });
                 event.preventDefault();
             });
-
 
         //Espacio para boton de cambio de estado
         $('#cambiarEstado').on('click',function(event){
