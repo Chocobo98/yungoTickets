@@ -4,7 +4,7 @@
     
     <div class="text-white bg-blue-400 flex flex-shrink-0 flex-col">
         <div class="flex relative items-center p-4 h-12">
-            <span class="text -2x1 tracking-wide">Titulo</span>
+            
         </div>
     </div>
 </header>
