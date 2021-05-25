@@ -25,6 +25,8 @@ class Ticket extends Model
 
     public $timestamps = false;
 
+    
+
 
     public function cliente()
     {
@@ -104,5 +106,56 @@ class Ticket extends Model
         ->get();
 
         return $query;
+    }
+
+    //Aartado para las consultas de los tickets del mes[MULTIPLES CONSULTAS]
+
+    //Consulta para mostrar los tickets registrados en el mes actual
+    public static function pdfTMensual()
+    {
+        $data = Ticket::where(DB::raw('date_format(Fecha,"%m")'),'=', DB::raw('MONTH(CURDATE())'))->get();
+        //dd($data);
+
+        return $data;
+    }
+
+    //Consulta para mostrar los ticket resueltos en el mes actual
+    public static function pdfTMensualEstado()
+    {
+        $data = Ticket::where([
+            [DB::raw('date_format(Fecha,"%m")'),'=', DB::raw('MONTH(CURDATE())')],
+            ['estado','=','Resuelto']
+            ])->get();
+
+        //dd($data);
+        return $data;
+    }
+
+    //Consulta para mostrar el conteo del tipo de problema registrado en el mes
+    public static function pdfTConteoTP()
+    {
+        $data = Ticket::select(DB::raw('count(tipoProblema) as Registros'),'tipoProblema')
+        ->where(DB::raw('date_format(Fecha,"%m")'),'=',DB::raw('MONTH(CURDATE())'))
+        ->groupby('tipoProblema')
+        ->get();
+
+        //dd($data);
+
+        return $data;
+    }
+
+    public static function pdfTConteoZona()
+    {
+        $data = Ticket::select(DB::raw('count(*) as Registros'),'sitios.zona')
+        ->join('clientes','idCliente','=','fk_cliente')
+        ->join('sitios','idSitios','=','fk_sitios')
+        ->where(DB::raw('date_format(Fecha,"%m")'),'=',DB::raw('MONTH(CURDATE())'))
+        ->groupby('zona')
+        ->orderby('Registros','desc')
+        ->get();
+
+        //dd($data);
+
+        return $data;
     }
 }
