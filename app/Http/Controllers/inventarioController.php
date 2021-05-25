@@ -19,7 +19,7 @@ class inventarioController extends Controller
      */
     public function index()
     {
-        return view('inventario.index');
+        return view('inventario.index'); 
     }
 
     //API de Datatables
