@@ -58,3 +58,6 @@ Route::get('/tickets/{id}/{tipoProblema}','App\Http\Controllers\ticketsControlle
 Route::get('/upload-file/{id}', 'App\Http\Controllers\FileUpload@getFile')->name('file.get');
 Route::post('/upload-file/{id}','App\Http\Controllers\FileUpload@fileUpload')->name('file.upload');
 
+//API que conecta con la ruta del controlador del generador de PDF
+Route::get('/downloadPDF','App\Http\Controllers\PDFController@downloadPDF')->name('pdf.download');
+
