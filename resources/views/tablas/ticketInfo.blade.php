@@ -67,30 +67,30 @@
         </button>
     </form>
     {{-- Apartado para subir archivos  --}}
-    <form action="/upload-file/{{ $dato->idTicket }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @if(count($errors)>0)
-            <div>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>        
+    <div class="flex">
+        <form action="/upload-file/{{ $dato->idTicket }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @if(count($errors)>0)
+                <div>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>        
+                </div>
+            @endif
+            <div class="custom-file">
+                <input type="file" name="file" class="custom-file-input" id="chooseFile">
             </div>
-        @endif
-        <div class="custom-file">
-            <input type="file" name="file" class="custom-file-input" id="chooseFile">
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-block">
-            Upload Filess
-        </button>
-    </form>
+            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Subir archivo
+            </button>
+        </form>
+    </div>
 </div>
 
 {{-- Tabla de los tickets registrados con el tipo de problema --}}
 <div class="md:col-start-1 md:col-end-4 md:row-start-2 overflow-y-auto rounded-lg">
-    
     <table id="historial" class="w-full sm:bg-white rounded-lg sm:shadow-lg overflow-y-scroll">
         <thead id="cabeza" class="text-white">
             <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
@@ -102,6 +102,10 @@
         <tbody id="cuerpo" class="flex-1 sm:flex-none"> 
         </tbody>
     </table>
+    {{-- Apartado para las imagenes previas del ticket --}}
+    <div id="archivo" class="bg-white rounded">
+
+    </div>
 </div>
 
 <script>
@@ -161,6 +165,20 @@
                 }
                 
             });
+
+        //Carga los archivos[FALTA DE PRUEBAS]
+        $.ajax({
+            url:`/upload-file/${id}`,
+            type:'GET',
+            dataType:"json",
+            success:function(data){
+                data.forEach(imagen => {
+                    var img = `<img src="${imagen['file_path']}"></img>`;
+                    console.log(img);
+                    $("#archivo").append(img);
+                }); 
+            }
+        });
         
         //Evento para subir el comentario
         $('#registrar').submit(function(event){

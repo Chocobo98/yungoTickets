@@ -7,9 +7,10 @@ use App\Models\File;
 
 class FileUpload extends Controller
 {
-    public function getFile()
+    public function getFile($id)
     {
-        
+        $data = File::select('file_path')->where('fk_ticket','=',$id)->get();
+        return $data->toJson();
     }
 
     public function fileUpload($id, Request $request)
