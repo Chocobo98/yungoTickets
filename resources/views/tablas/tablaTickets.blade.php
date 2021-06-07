@@ -36,17 +36,10 @@
                       {data: 'descripcion', name:'descripcion'},
                       {data: 'Fecha', name: 'Fecha'},
                       {data: 'estado', name: 'estado'},
-                      {data: 'action', name: 'action', orderable: false, searchable: false},
-                      
+                      {data: 'action', name: 'action', orderable: false, searchable: false}, 
                     ],
                     order:[[4,'desc']]
-                    /*
-                    columnsDefs:[{targets:3, render:function(data){
-                      return moment(data).format('MMMM Do YYYY');
-                    }}]
-                    */
                   });
-                  //$.fn.dataTable.ext.errMode="throw";
                 });
             </script>
         </div>

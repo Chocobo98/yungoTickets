@@ -173,7 +173,7 @@
             dataType:"json",
             success:function(data){
                 data.forEach(imagen => {
-                    var img = `<img src="${imagen['file_path']}"></img>`;
+                    var img = `<img src="${imagen['file_path']}">`;
                     console.log(img);
                     $("#archivo").append(img);
                 }); 

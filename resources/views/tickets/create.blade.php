@@ -62,14 +62,14 @@
   </div>
   
   <script>
-    $(document).ready(function{
-      $('form').sumbit(function(){
+    $(document).ready(function(){
+      $("form").submit(function(){
         Swal.fire(
           'Registrado!',
-          'Un ticket ha sido registrado',
+          'Un ticket ha sido registrado!',
           'success'
-          )
-      });
+        )
+      })
     });
   </script>
 @endsection

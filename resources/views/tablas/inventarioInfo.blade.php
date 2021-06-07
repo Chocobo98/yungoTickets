@@ -27,6 +27,7 @@
         </div>
     </div>
 </div>
+
 <!--Select con los nombres de los clientes y como valores sus id-->
 <div class="col-start-5">
     <p class="grid-cols-3 text-center mt-1 font-mono text-xl font-bold relative">Clientes</p>
@@ -34,17 +35,14 @@
         <option value="" selected disabled hidden></option>
         @foreach ($clientes as $cliente)
             <option value={{ $cliente->idCliente }}>{{ $cliente->nombre }}</option>
-        @endforeach
-        
+        @endforeach 
     </select>
 </div>
 
 <div class="md:row-start-2 place-items-center"> 
     <table id="infCliente" class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
     </table>
-    
     <a id="btnAsignar"></a>
-    
 </div>
 
 

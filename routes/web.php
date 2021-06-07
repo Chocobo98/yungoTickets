@@ -41,11 +41,6 @@ Route::get('/inventario/asignarEquipo/getUserDetails/{id}','App\Http\Controllers
 Route::get("/inventario/asignarEquipo/{id}",'App\Http\Controllers\inventarioController@asignar')->name('inventario.asignar');
 Route::get('/inventario/asigCliente/{id}/{mac}', 'App\Http\Controllers\ClientesController@asignar')->name('cliente.asignar');
 
-//IGNORAR
-/*
-Route::get('/tickets/getComment','App\Http\Controllers\CommentsController@getComment')->name('tickets.getComment');
-Route::post('/tickets/makeComment','App\Http\Controllers\CommentsController@makeCommentt')->name('tickets.makeComment');
-*/
 
 //API para los comentarios
 Route::get('/tickets/{id}/comments','App\Http\Controllers\CommentsController@obtener')->name('comments.obtener');

@@ -11,8 +11,11 @@
     Semanal
     </button>
   </div>
+  {{-- Apartado de la tabla con los numeros de ticket por estado --}}}
   @include('tablas.tablasNumerosTickets',['ticketMensual'=>$ticketMensual,'ticketGeneral'=>$ticketGeneral])
 </div>
+
+{{-- Barra para descargar el reporte --}}
 <div class="ml-10 mt-2 flex">
   <a href="{{ route('pdf.download') }}">
      <button class="bg-gray-300 hover:bg-gray-400 text-gray-900 font-bold py-2 px-4 rounded inline-flex items-center">
