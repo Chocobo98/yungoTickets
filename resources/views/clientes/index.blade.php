@@ -1,10 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <!--@@include('clientes.tablaBusqueda')-->
-    <!--<x-tabla-clientes-component/>-->
-
-    
-    <!--<input type="text" class="form-control" id="search" name="search" placeholder="Buscar a cliente..."></input>-->
 <div class="pageHeader">
   <div class="overflow-hidden flex flex-shrink p-4 md:flex-shrink-0">
     <div class="flex space-x-2 box-border ">
