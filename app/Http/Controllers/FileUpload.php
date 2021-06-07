@@ -9,7 +9,7 @@ class FileUpload extends Controller
 {
     public function getFile($id)
     {
-        $data = File::select('file_path')->where('fk_ticket','=',$id)->get();
+        $data = File::where('fk_ticket','=',$id)->get();
         return $data->toJson();
     }
 
